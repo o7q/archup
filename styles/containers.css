@@ -1,5 +1,6 @@
 .section {
-    width: 900px;
+    width: 90%;
+    max-width: 900px;
     height: auto;
 
     padding: 20px;
@@ -10,7 +11,7 @@
 
     background-color: rgb(32, 32, 35);
     border-radius: 10px;
-    margin: 10px;
+   margin: 10px auto;
 
     border: 1px solid #4d4d5f;
 }
