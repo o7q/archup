@@ -1,0 +1,66 @@
+.text {
+    position: relative;
+    color: rgb(219, 219, 219);
+    line-height: 18px;
+}
+
+.text--monospace {
+    font-family: monospace;
+    white-space: pre-wrap;
+    color: rgb(224, 224, 219);
+    background-color: rgb(29, 29, 34);
+}
+
+.textarea {
+    width: 100%;
+
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+
+    color: white;
+    background-color: rgb(22, 22, 22);
+
+    border-radius: 5px;
+    padding: 5px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.textarea-text {
+    font-family: monospace;
+    position: relative;
+    color: rgb(230, 230, 230);
+    line-height: 6px;
+
+    white-space: pre-wrap;
+}
+
+.textarea-text--comment {
+    color: rgb(158, 158, 158);
+}
+
+.text--indent {
+    left: 24px;
+}
+
+.text--h1 {
+    font-size: 30px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+.text--h2 {
+    font-size: 25px;
+    font-weight: bold;
+    line-height: 12px;
+}
+
+.text--h3 {
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 25px;
+}

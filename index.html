@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+    <title>Archup</title>
+
+    <link rel="stylesheet" href="styles/body.css">
+    <link rel="stylesheet" href="styles/text.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/containers.css">
+
+</head>
+
+<body>
+    <img src="assets/images/arch.png" class="center" style="width: 100px;">
+    <p class="text text--h1 center" style="line-height: 0px;">Archup</p>
+    <p class="text center" style="line-height: 5px;">A straight to the point Arch Linux installation guide designed for beginners.</p>
+
+    <div class="section">
+        <p class="text text--h2">Preface</p>
+
+        <p class="text">The goal of this guide is to reiterate what has already been provided by the official Arch Linux installation guide, alongside a few things I've learned along the way.</p>
+        <p class="text">This guide is intended for users who are ready to commit, and will not explain how to dual boot. If you want, you can practice installing Arch in a virtual machine, such as <a class="text" href="https://www.virtualbox.org">VirtualBox</a> (for Windows) or <a class="text" href="https://virt-manager.org">virt-manager</a> (for Linux).</p>
+
+        <p class="text text--h3">Before you start</p>
+        <p class="text">I'd recommend backing up any important data to an external drive. The Arch installer is powerful, but unforgiving. It does not care about your data. Its job is to do exactly what you tell it.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 1: Preparing the installation medium</p>
+
+        <p class="text">To start, you will need to create an Arch Linux installation medium.</p>
+        <p class="text">Because this guide is for the installation only, I will delve into how to format an installation medium. There are countless resources online.</p>
+
+        <p class="text">Visit the <a class="text" href="https://archlinux.org/download">Arch Linux download page</a> to grab an ISO image.</p>
+        <p class="text">If you are on Windows, I'd recommend using the <a class="text" href="https://github.com/pbatard/rufus">Rufus</a> formatting utility.</p>
+        <p class="text text--indent">Make sure you set the filesystem to <strong>GPT</strong> to enable <strong>UEFI</strong>.</p>
+
+        <p class="text">If you are on Linux, you can use the <span class="text--monospace"><strong>dd</strong></span> command.</p>
+        <div class="textarea">
+            <span class="textarea-text"">lsblk</span><span class="textarea-text textarea-text--comment"">   # identify the correct drive</span>
+            <br>
+            <span class="textarea-text"">sudo dd if=/path/to/your/iso of=/dev/&lt;YOUR DRIVE&gt; bs=1M status=progress</span><span class="textarea-text textarea-text--comment"">   # WARNING: this command is EXTREMELY dangerous, please ensure you specify the correct drive</span>
+        </div>
+        <p class="text text--monospace"><strong>lsblk</strong>  | List disks, their partitions, alongside other useful information.</p>
+        <p class="text text--monospace"><strong>dd</strong>     | Low-level copying command.</p>
+        <p class="text text--monospace"><strong>if</strong>     | Input file.</p>
+        <p class="text text--monospace"><strong>of</strong>     | Output file/location.</p>
+        <p class="text text--monospace"><strong>bs</strong>     | Block size, <strong>1M</strong> is usually good enough by default. This determines how much data to copy in each pass.</p>
+        <p class="text text--monospace"><strong>status</strong> | Enable live output of the progress.</p>
+
+        <br>
+
+        <p class="text">You are now ready to start the installation process. Restart your computer and boot into the installation drive.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 2: Partitioning</p>
+
+        <p class="text">Once you have booted into the Arch installer, you will need to partition your disks.</p>
+        <p class="text">Before this, you must identify the correct drive.</p>
+
+        <div class="textarea">
+            <span class="textarea-text">lsblk</span>
+        </div>
+
+        <p class="text">Here is an example output:</p>
+
+        <div class="textarea">
+            <span class="textarea-text"">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+nvme0n1     259:0    0 931.5G  0 disk</span>
+        </div>
+
+        <p class="text">Ensure you are using the correct disk for your setup, for example it could be: nvme0n1, sda, sdb, or something else.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text">This next step is optional, but I recommend cleaning your disks beforehand.</p>
+        <div class="textarea">
+            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # this will only clear partition information and it won't clear data, usually this is good enough</span>
+        </div>
+        <p class="text">If you want to fully wipe the drive:</p>
+        <div class="textarea">
+            <span class="textarea-text">dd if=/dev/zero of=/dev/&lt;YOUR DRIVE&gt; bs=1M count=&lt;COUNT&gt; status=progress</span><span class="textarea-text textarea-text--comment">   # remove count if you want to do a full reset, this value will determine how far into the drive to zero, I recommend setting this between 100-1000</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <div class="textarea">
+            <span class="textarea-text">cfdisk</span><span class="textarea-text textarea-text--comment">   # we will use cfdisk to partition our drives, as it offers a friendly GUI environment</span>
+        </div>
+
+        <p class="text">With cfdisk open, you will create three new partitions. Use <strong>New</strong> to create partitions.</p>
+        <p class="text"><span class="text--monospace"><strong>Partition 1</strong></span> | Make this <strong>100M</strong> in size. You will use this as your EFI boot partition. Which will contain the files that tell your system how to boot.</p>
+        <p class="text"><span class="text--monospace"><strong>Partition 2</strong></span> | Make this <strong>4G</strong> in size. You will use this as your swap partition. Which will store excess memory/ram in the case that it overflows.</p>
+        <p class="text"><span class="text--monospace"><strong>Partition 3</strong></span> | Make this the remaining size. You will use this as your root partition. (this is where your files will be stored)</p>
+
+        <p class="text">When you are done, use <strong>Write</strong> to apply the changes. Ensure you are using the proper drive because this will overwrite partition tables. (data loss)</p>
+
+        <div class="spacer"></div>
+
+        <p class="text">Now you will make the filesystem.</p>
+        <div class="textarea">
+            <span class="textarea-text">mkfs.ext4 /dev/&lt;YOUR THIRD PARTITION&gt;</span>
+            <span class="textarea-text textarea-text--comment">        # creates the root partition, you will be using ext4</span>
+            <br>
+            <span class="textarea-text">mkfs.fat -F 32 /dev/&lt;YOUR FIRST PARTITION&gt;</span>
+            <span class="textarea-text textarea-text--comment">   # creates the EFI partition, you will be using the FAT32 filesystem, as it is required by UEFI</span>
+            <br>
+            <span class="textarea-text">mkswap /dev/&lt;YOUR SECOND PARTITION&gt;</span>
+            <span class="textarea-text textarea-text--comment">          # creates the swap partition</span>
+        </div>
+
+        <p class="text">Next, you need to mount the partitions in order to be accessed:</p>
+
+        <div class="textarea">
+            <span class="textarea-text">mount /dev/&lt;YOUR THIRD PARTITION&gt; /mnt</span><span class="textarea-text textarea-text--comment">        # /mnt (mount) is where your root drive will be mounted</span>
+            <br>
+            <span class="textarea-text">mount --mkdir /dev/&lt;YOUR FIRST PARTITION&gt; /mnt/boot/efi</span>
+            <br>
+            <span class="textarea-text">swapon /dev/&lt;YOUR SECOND PARTITION&gt;</span><span class="textarea-text textarea-text--comment">           # enable the swap partition</span>
+        </div>
+        <p class="text text--monospace"><strong>--mkdir</strong> | Creates directories recursively to ensure they exist.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text">If you followed everything correctly, run <strong>lsblk</strong> again. It should look something like this:</p>
+
+        <div class="textarea">
+            <span class="textarea-text">NAME        MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+nvme0n1     259:0    0 931.5G  0 disk 
+├─nvme0n1p1 259:1    0   100M  0 part /boot/efi
+├─nvme0n1p2 259:2    0     4G  0 part [SWAP]
+└─nvme0n1p3 259:3    0 927.4G  0 part /</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 3: Installing the system</p>
+        <p class="text"><strong>pacstrap</strong> will be used to install the system with the following packages:</p>
+        <div class="textarea">
+            <span class="textarea-text">pacstrap /mnt base linux linux-firmware base-devel grub efibootmgr nano networkmanager</span>
+        </div>
+        <p class="text text--monospace"><strong>pacstrap</strong> | Package manager used for installing the system.</p>
+        <p class="text text--monospace"><strong>/mnt</strong>     | Specify to install to the "/mnt" directory, which is your root system.</p>
+
+        <p class="text text--monospace"><strong>base</strong>           | Core packages.</p>
+        <p class="text text--monospace"><strong>linux</strong>          | The Linux Kernel.</p>
+        <p class="text text--monospace"><strong>linux-firmware</strong> | Firmware for various hardware devices.</p>
+        <p class="text text--monospace"><strong>base-devel</strong>     | Essential packages for development, usually required for AUR packages. This is technically optional.</p>
+        <p class="text text--monospace"><strong>grub</strong>           | A bootloader.</p>
+        <p class="text text--monospace"><strong>efibootmgr</strong>     | A tool to manage UEFI boot entries.</p>
+        <p class="text text--monospace"><strong>nano</strong>           | A text editor that runs in the terminal.</p>
+        <p class="text text--monospace"><strong>networkmanager</strong> | A networking tool</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 4: Configuring the system</p>
+        <p class="text">After installing, you are now ready to configure the system.</p>
+
+        <p class="text">First, you must tell Arch which drives you want to boot to. You will use <strong>genfstab</strong> for this.</p>
+        <div class="textarea">
+            <span class="textarea-text">genfstab -U /mnt >> /mnt/etc/fstab</span>
+        </div>
+        <p class="text text--monospace"><strong>genfstab</strong> | Generates an fstab configuration, which will tell your system which drives to mount at bootup.</p>
+        <p class="text text--monospace"><strong>-U</strong>       | Tells the generator to use UUID's to identify drives, which is more reliable then just using drive names, as they can change.</p>
+        <p class="text text--monospace"><strong>&gt;&gt;</strong>       | Append the data to the <strong>fstab</strong> configuration.</p>
+
+        <p class="text">At the moment, you are still running commands on the installation medium. To access and modify the system further, you need to root into the system.</p>
+        <div class="textarea">
+            <span class="textarea-text">arch-chroot /mnt</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Configuring the timezone</p>
+
+        <p class="text">Now you will configure your locale information, first you will setup your timezone.</p>
+        <p class="text">You can use the <strong>ls</strong> <i>(list directories)</i> command to find your region. For example:</p>
+        <div class="textarea">
+            <span class="textarea-text">ls /usr/share/zoneinfo</span>
+        </div>
+
+        <p class="text">To see the regions in, for example: <i>America</i>. You would do:</p>
+        <div class="textarea">
+            <span class="textarea-text">ls /usr/share/zoneinfo/America</span>
+        </div>
+
+        <p class="text">Once you find your region, you can assign it to your system:</p>
+        <div class="textarea">
+            <span class="textarea-text">ln -sf /usr/share/zoneinfo/&lt;ZONE&gt;/&lt;REGION&gt; /etc/localtime</span>
+            <br>
+            <span class="textarea-text">hwclock --systohc</span>
+        </div>
+        <p class="text text--monospace"><strong>ln</strong>  | The link command.</p>
+        <p class="text text--monospace"><strong>-sf</strong> | Force a symbolic link.</p>
+
+        <p class="text text--monospace"><strong>hwclock</strong>   | Set the hardware clock.</p>
+        <p class="text text--monospace"><strong>--systohc</strong> |  Write the system clock to the hardware clock.</p>
+
+        <p class="text">You can verify if your timezone was properly set by running:</p>
+        <div class="textarea">
+            <span class="textarea-text">date</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Configuring the system-wide locale</p>
+
+        <p class="text">This will tell your system your language, how to encode characters/time formats, etc.</p>
+        <div class="textarea">
+            <span class="textarea-text">nano /etc/locale.gen</span>
+        </div>
+        <p class="text text--monospace"><strong>nano</strong>  | The text editor you installed earlier, this will be used to edit configurations in the terminal.</p>
+
+        <p class="text">The basic controls of nano are as follows:</p>
+        <p class="text text--monospace"><strong>Up/Down Arrows</strong>  | Navigate up and down.</p>
+        <p class="text text--monospace"><strong>Ctrl + O</strong>  | Write/save a file.</p>
+        <p class="text text--monospace"><strong>Ctrl + X</strong>  | Exit nano.</p>
+
+        <p class="text">Find the locale that fits your language/region, then uncomment it by removing the <strong>#</strong>.</p>
+        <span class="text">For US English, you can use </span><span class="text text--monospace"><strong>en_US.UTF-8 UTF-8</strong>.</span>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Setting the hostname</p>
+        
+        <p class="text">You can set the hostname here:</p>
+        <div class="textarea">
+            <span class="textarea-text">nano /etc/hostname</span>
+        </div>
+        <p class="text">Your hostname may only contain <span class="text--monospace"><strong>a-z, 0-9, and -'s</strong></span>, and it may not start or end with a <span class="text--monospace"><strong>-</strong></span>.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Setting the root password</p>
+        <div class="textarea">
+            <span class="textarea-text">passwd</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Enabling NetworkManager</p>
+        <div class="textarea">
+            <span class="textarea-text">systemctl enable NetworkManager</span>
+        </div>
+        <p class="text text--monospace"><strong>systemctl</strong> | The system service manager.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 5: Configuring the user</p>
+
+        <p class="text">First you must create a user:</p>
+        <div class="textarea">
+            <span class="textarea-text">useradd -m -G wheel -s /bin/bash &lt;USERNAME&gt;</span>
+        </div>
+        <p class="text text--monospace"><strong>-m</strong>           | Create the home directory. (/home/&lt;USERNAME&gt;)</p>
+        <p class="text text--monospace"><strong>-G wheel</strong>     | Set the group to wheel, this will be used for sudo.</p>
+        <p class="text text--monospace"><strong>-s /bin/bash</strong> | Set the login shell.</p>
+
+        <p class="text">Setting the user password:</p>
+        <div class="textarea">
+            <span class="textarea-text">passwd &lt;USERNAME&gt;</span>
+        </div>
+
+        <p class="text text--h3">Enabling sudo</p>
+        <div class="textarea">
+            <span class="textarea-text">EDITOR=nano visudo</span>
+        </div>
+        <p class="text">Look for a line near the bottom that looks something like:</p>
+        <div class="textarea">
+            <span class="textarea-text">%wheel ALL=(ALL:ALL) ALL</span>
+        </div>
+        <p class="text">Then uncomment it by removing the <strong>#</strong>.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 6: Configuring the bootloader</p>
+
+        <div class="textarea">
+            <span class="textarea-text">grub-install /dev/&lt;YOUR DRIVE&gt;</span>
+            <span class="textarea-text">grub-mkconfig -o /boot/grub/grub.cfg</span>
+            <span class="textarea-text">exit</span>
+            <span class="textarea-text">reboot</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 7: Installing the desktop manager</p>
+        <p class="text">There are tons of desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu plasma sddm</span>
+            <span class="textarea-text">sudo systemctl enable --now sddm</span>
+        </div>
+
+        <p class="text">After this, you should be placed directly inside <strong>sddm</strong>. You can login with the password you set in <strong>step 5</strong>.</p>
+        <p class="text">If you followed the steps properly, you should now have a functional KDE Plasma desktop environment. No apps will be installed by default, follow the next step for recommendations.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 8: Recommendations</p>
+        <p class="text">There are a few important extra things to install and configure:</p>
+
+        <p class="text text--h3">NVIDIA drivers</p>
+        <p class="text">If you have an NVIDIA graphics card, you should install the appropriate drivers.</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu nvidia</span>
+            <span class="textarea-text">sudo reboot now</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">SSD trimming</p>
+        <p class="text">If you have an SSD, it is important you enable trimming for the longevity and efficiency of your drive.</p>
+        <p class="text">Before following this step, check to see if your drive supports trimming:</p>
+        <div class="textarea">
+            <span class="textarea-text">lsblk --discard</span><span class="textarea-text textarea-text--comment">   # look at the DISC-GRAN and DISC-MAX values, non-zero values mean the drive supports trimming.</span>
+        </div>
+        <p class="text">Enable the trimming service:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo systemctl enable fstrim.timer</span>
+            <br>
+            <span class="textarea-text">sudo systemctl start fstrim.timer</span>
+        </div>
+        <p class="text">You can check its status with:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo systemctl status fstrim.timer</span>
+        </div>
+        <p class="text">If you want to manually start a trim:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo fstrim -v /</span><span class="textarea-text textarea-text--comment">   # '/' species the root directory</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Useful Packages</p>
+        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
+        <a class="text text--h3" href="packages.html">You can find them here</a>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">virt-manager</p>
+        <p class="text">For a basic virt-manager setup, you can install the following packages:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -S virt-manager qemu-desktop</span>
+            <br>
+            <span class="textarea-text">sudo pacman -S swtpm</span><span class="textarea-text textarea-text--comment">   # only if you need TPM</span>
+            <br>
+            <span class="textarea-text">sudo systemctl enable --now libvirtd</span>
+        </div>
+    </div>
+</body>
+
+</html>
