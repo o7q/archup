@@ -9,7 +9,7 @@
                 <br>
                 A straight to the point Arch Linux installation guide for beginners.
                 <br>
-                <a href=""><strong>Access it here</strong></a>
+                <a href="https://o7q.github.io/archup"><strong>Access it here</strong></a>
             </td>
         </tr>
     </table>
