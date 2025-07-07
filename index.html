@@ -322,9 +322,11 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">If you have an SSD, it is important you enable trimming for the longevity and efficiency of your drive.</p>
         <p class="text">Before following this step, check to see if your drive supports trimming:</p>
         <div class="textarea">
-            <span class="textarea-text">lsblk --discard</span><span class="textarea-text textarea-text--comment">   # look at the DISC-GRAN and DISC-MAX values, non-zero values mean the drive supports trimming.</span>
+            <span class="textarea-text">lsblk --discard</span><span class="textarea-text textarea-text--comment">   # look at the DISC-GRAN and DISC-MAX values, non-zero values indicate the drive supports trimming.</span>
         </div>
-        <p class="text">Enable the trimming service:</p>
+        <p class="text text--monospace"><strong>--discard</strong> | Displays discard information for all drives.</p>
+        
+        <p class="text">If you drive supports trimming, enable the trimming service:</p>
         <div class="textarea">
             <span class="textarea-text">sudo systemctl enable fstrim.timer</span>
             <br>
@@ -338,6 +340,7 @@ nvme0n1     259:0    0 931.5G  0 disk
         <div class="textarea">
             <span class="textarea-text">sudo fstrim -v /</span><span class="textarea-text textarea-text--comment">   # '/' species the root directory</span>
         </div>
+        <p class="text text--monospace"><strong>-v</strong> | Enable verbose logging.</p>
 
         <div class="spacer"></div>
 
