@@ -26,7 +26,7 @@
         <p class="text text--h2">Preface</p>
 
         <p class="text">The goal of this guide is to reiterate what has already been provided by the official Arch Linux installation guide, alongside a few things I've learned along the way.</p>
-        <p class="text">This guide is intended for users who are ready to commit, and it will not explain how to dual boot. If you want, you can practice installing Arch in a virtual machine, such as <a target="_blank" class="text" href="https://www.virtualbox.org">VirtualBox</a> (for Windows) or <a target="_blank" class="text" href="https://virt-manager.org">virt-manager</a> (for Linux).</p>
+        <p class="text">If you want, you can practice installing Arch in a virtual machine, such as <a target="_blank" class="text" href="https://www.virtualbox.org">VirtualBox</a> (for Windows) or <a target="_blank" class="text" href="https://virt-manager.org">virt-manager</a> (for Linux).</p>
 
         <p class="text">Follow this guide carefully, as the Arch installer is powerful, but unforgiving. It does not care about your data. Its job is to do exactly what you tell it.</p>
     </div>
@@ -63,7 +63,7 @@
         <p class="text text--h2">Step 2: Partitioning</p>
 
         <p class="text">Once you have booted into the Arch installer, you will need to partition your disks.</p>
-        <p class="text">Before this, you must identify the correct drive.</p>
+        <p class="text">Identify the correct drive:</p>
 
         <div class="textarea">
             <span class="textarea-text">lsblk</span>
@@ -76,11 +76,11 @@
 nvme0n1     259:0    0 931.5G  0 disk</span>
         </div>
 
-        <p class="text">Ensure you are using the correct disk for your setup, for example it could be: nvme0n1, sda, sdb, or something else.</p>
+        <p class="text">Ensure you are using the correct drive for your setup, common names are: <strong>nvme0n1</strong>, <strong>sda</strong>, <strong>sdb</strong>, or something else.</p>
 
         <div class="spacer"></div>
 
-        <p class="text">This next step is optional, but I recommend cleaning your disks beforehand.</p>
+        <p class="text">If you are <strong>NOT</strong> planning on dual booting, I recommend cleaning your disks beforehand:</p>
         <div class="textarea">
             <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # this will only clear partition information and it won't clear data, usually this is good enough</span>
         </div>
@@ -91,16 +91,17 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
 
         <div class="spacer"></div>
 
+        <p class="text">Open <strong>cfdisk</strong> to start partitioning your drive:</p>
         <div class="textarea">
             <span class="textarea-text">cfdisk</span><span class="textarea-text textarea-text--comment">   # we will use cfdisk to partition our drives, as it offers a friendly GUI environment</span>
         </div>
 
-        <p class="text">With cfdisk open, you will create three new partitions. Use <strong>New</strong> to create partitions.</p>
+        <p class="text">Use <strong>New</strong> to create a partition. You will create three:</p>
         <p class="text"><span class="text--monospace"><strong>Partition 1</strong></span> | Make this <strong>100M</strong> in size. You will use this as your EFI boot partition. Which will contain the files that tell your system how to boot.</p>
         <p class="text"><span class="text--monospace"><strong>Partition 2</strong></span> | Make this <strong>4G</strong> in size. You will use this as your swap partition. Which will store excess memory/ram in the case that it overflows.</p>
-        <p class="text"><span class="text--monospace"><strong>Partition 3</strong></span> | Make this the remaining size. You will use this as your root partition. (this is where your files will be stored)</p>
+        <p class="text"><span class="text--monospace"><strong>Partition 3</strong></span> | Make this the remaining size. You will use this as your root partition. (where your files will be stored)</p>
 
-        <p class="text">When you are done, use <strong>Write</strong> to apply the changes. Ensure you are using the proper drive because this will overwrite partition tables. (data loss)</p>
+        <p class="text">When you are done, use <strong>Write</strong> to apply the changes. Again, please ensure you are using the proper drive because this will overwrite partition tables. (data loss)</p>
 
         <div class="spacer"></div>
 
@@ -146,9 +147,8 @@ nvme0n1     259:0    0 931.5G  0 disk
         <div class="textarea">
             <span class="textarea-text">pacstrap /mnt base linux linux-firmware base-devel grub efibootmgr nano networkmanager</span>
         </div>
-        <p class="text text--monospace"><strong>pacstrap</strong> | Package manager used for installing the system.</p>
-        <p class="text text--monospace"><strong>/mnt</strong>     | Specify to install to the "/mnt" directory, which is your root system.</p>
-
+        <p class="text text--monospace"><strong>pacstrap</strong>       | Package manager used for installing the system.</p>
+        <p class="text text--monospace"><strong>/mnt</strong>           | Specify to install to the "/mnt" directory, which is your root system.</p>
         <p class="text text--monospace"><strong>base</strong>           | Core packages.</p>
         <p class="text text--monospace"><strong>linux</strong>          | The Linux Kernel.</p>
         <p class="text text--monospace"><strong>linux-firmware</strong> | Firmware for various hardware devices.</p>
@@ -161,13 +161,13 @@ nvme0n1     259:0    0 931.5G  0 disk
 
     <div class="section">
         <p class="text text--h2">Step 4: Configuring the system</p>
-        <p class="text">After installing, you are now ready to configure the system.</p>
+        <p class="text">You are now ready to configure the system.</p>
 
-        <p class="text">First, you must tell Arch which drives you want to boot to. You will use <strong>genfstab</strong> for this.</p>
+        <p class="text">First, you must tell Arch which drives you want to boot to. You will use <strong>genfstab</strong> for this:</p>
         <div class="textarea">
             <span class="textarea-text">genfstab -U /mnt >> /mnt/etc/fstab</span>
         </div>
-        <p class="text text--monospace"><strong>genfstab</strong> | Generates an fstab configuration, which will tell your system which drives to mount at bootup.</p>
+        <p class="text text--monospace"><strong>genfstab</strong> | Generates an fstab configuration, which will tell your system which drives to mount at boot.</p>
         <p class="text text--monospace"><strong>-U</strong>       | Tells the generator to use UUID's to identify drives, which is more reliable then just using drive names, as they can change.</p>
         <p class="text text--monospace"><strong>&gt;&gt;</strong>       | Append the data to the <strong>fstab</strong> configuration.</p>
 
@@ -193,7 +193,7 @@ nvme0n1     259:0    0 931.5G  0 disk
 
         <p class="text">Once you find your region, you can assign it to your system:</p>
         <div class="textarea">
-            <span class="textarea-text">ln -sf /usr/share/zoneinfo/&lt;ZONE&gt;/&lt;REGION&gt; /etc/localtime</span>
+            <span class="textarea-text">ln -sf /usr/share/zoneinfo/&lt;REGION&gt;/&lt;ZONE&gt; /etc/localtime</span>
             <br>
             <span class="textarea-text">hwclock --systohc</span>
         </div>
@@ -212,16 +212,16 @@ nvme0n1     259:0    0 931.5G  0 disk
 
         <p class="text text--h3">Configuring the system-wide locale</p>
 
-        <p class="text">This will tell your system your language, how to encode characters/time formats, etc.</p>
+        <p class="text">Next you will need to configure the system locale. This will tell your system your language, how to encode characters/time formats, etc.</p>
         <div class="textarea">
             <span class="textarea-text">nano /etc/locale.gen</span>
         </div>
-        <p class="text text--monospace"><strong>nano</strong>  | The text editor you installed earlier, this will be used to edit configurations in the terminal.</p>
+        <p class="text text--monospace"><strong>nano</strong> | The text editor you installed earlier, this will be used to edit configurations in the terminal.</p>
 
         <p class="text">The basic controls of nano are as follows:</p>
-        <p class="text text--monospace"><strong>Up/Down Arrows</strong>  | Navigate up and down.</p>
-        <p class="text text--monospace"><strong>Ctrl + O</strong>  | Write/save a file.</p>
-        <p class="text text--monospace"><strong>Ctrl + X</strong>  | Exit nano.</p>
+        <p class="text text--monospace"><strong>Up/Down Arrows</strong> | Navigate up and down.</p>
+        <p class="text text--monospace"><strong>Ctrl + O</strong>       | Write/save a file.</p>
+        <p class="text text--monospace"><strong>Ctrl + X</strong>       | Exit nano.</p>
 
         <p class="text">Find the locale that fits your language/region, then uncomment it by removing the <strong>#</strong>.</p>
         <span class="text">For US English, you can use </span><span class="text text--monospace"><strong>en_US.UTF-8 UTF-8</strong>.</span>
@@ -255,7 +255,7 @@ nvme0n1     259:0    0 931.5G  0 disk
     <div class="section">
         <p class="text text--h2">Step 5: Configuring the user</p>
 
-        <p class="text">First you must create a user:</p>
+        <p class="text">Create a user:</p>
         <div class="textarea">
             <span class="textarea-text">useradd -m -G wheel -s /bin/bash &lt;USERNAME&gt;</span>
         </div>
@@ -267,6 +267,8 @@ nvme0n1     259:0    0 931.5G  0 disk
         <div class="textarea">
             <span class="textarea-text">passwd &lt;USERNAME&gt;</span>
         </div>
+
+        <div class="spacer"></div>
 
         <p class="text text--h3">Enabling sudo</p>
         <div class="textarea">
@@ -310,6 +312,7 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">If you have an NVIDIA graphics card, you should install the appropriate drivers.</p>
         <div class="textarea">
             <span class="textarea-text">sudo pacman -Syu nvidia</span>
+            <br>
             <span class="textarea-text">sudo reboot now</span>
         </div>
 
