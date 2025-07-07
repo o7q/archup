@@ -1,6 +1,6 @@
 .text {
     position: relative;
-    color: rgb(219, 219, 219);
+    color: rgb(220, 219, 220);
     line-height: 18px;
 }
 
@@ -8,7 +8,7 @@
     font-family: monospace;
     white-space: pre-wrap;
     color: rgb(224, 224, 219);
-    background-color: rgb(29, 29, 34);
+    background-color: rgb(34, 29, 34);
 }
 
 .textarea {
@@ -19,7 +19,7 @@
     transform: translateX(-50%);
 
     color: white;
-    background-color: rgb(22, 22, 22);
+    background-color: rgb(24, 22, 24);
 
     border-radius: 5px;
     padding: 5px;
