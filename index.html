@@ -82,7 +82,7 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
 
         <p class="text">If you are <strong>NOT</strong> planning on dual booting, I recommend cleaning your disks beforehand:</p>
         <div class="textarea">
-            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # this will only clear partition information and it won't clear data, usually this is good enough</span>
+            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # this will only clear partition information and it will not clear data, usually this is good enough</span>
         </div>
         <p class="text">If you want to fully wipe the drive:</p>
         <div class="textarea">
@@ -318,8 +318,41 @@ nvme0n1     259:0    0 931.5G  0 disk
 
         <div class="spacer"></div>
 
+        <p class="text text--h3">Drive auto-mounting</p>
+        <p class="text">By default, extra drives will not be automatically mounted on boot.</p>
+
+        <p class="text">Start by creating a mount folder:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo mkdir /mnt/&lt;MOUNT DIRECTORY&gt;</span>
+            <br>
+            <span class="textarea-text">sudo chown -R &lt;USER&gt;:&lt;USER&gt; /mnt/&lt;MOUNT DIRECTORY&gt;</span>
+        </div>
+        <p class="text text--monospace"><strong>chown</strong>         | Change the ownership of /mnt/&lt;MOUNT DIRECTORY&gt;.</p>
+        <p class="text text--monospace"><strong>-R</strong>            | Recursively change each entry. (if you have stuff in that directory)</p>
+        <p class="text text--monospace"><strong>&lt;USER&gt;:&lt;USER&gt;</strong> | Set the user and group owner.</p>
+
+        <p class="text">Get the UUID of the drive you want to auto-mount:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo blkid</span>
+        </div>
+
+        <p class="text">Add an entry for the drive in <strong>fstab</strong>:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo nano /etc/fstab</span>
+        </div>
+        <p class="text">Add the following line:</p>
+        <div class="textarea">
+            <span class="textarea-text">UUID=&lt;DRIVE UUID&gt; /mnt/&lt;MOUNT DIRECTORY&gt; ext4 defaults 0 2</span>
+        </div>
+        <p class="text text--monospace"><strong>ext4</strong>     | ext4 is a common filesystem type. You can change it to your needs.</p>
+        <p class="text text--monospace"><strong>defaults</strong> | Default mount options.</p>
+        <p class="text text--monospace"><strong>0</strong>        | Disable obsolete dump backup tool.</p>
+        <p class="text text--monospace"><strong>2</strong>        | Enable the filesystem check <strong>after</strong> the root.</p>
+
+        <div class="spacer"></div>
+
         <p class="text text--h3">SSD trimming</p>
-        <p class="text">If you have an SSD, it is important you enable trimming for the longevity and efficiency of your drive.</p>
+        <p class="text">If you have an SSD, it is important you enable trimming to improve the longevity and efficiency of your drive.</p>
         <p class="text">Before following this step, check to see if your drive supports trimming:</p>
         <div class="textarea">
             <span class="textarea-text">lsblk --discard</span><span class="textarea-text textarea-text--comment">   # look at the DISC-GRAN and DISC-MAX values, non-zero values indicate the drive supports trimming.</span>
