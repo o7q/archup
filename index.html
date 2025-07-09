@@ -226,6 +226,11 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">Find the locale that fits your language/region, then uncomment it by removing the <strong>#</strong>.</p>
         <span class="text">For US English, you can use </span><span class="text text--monospace"><strong>en_US.UTF-8 UTF-8</strong>.</span>
 
+        <p class="text">Generate your selected locales:</p>
+        <div class="textarea">
+            <span class="textarea-text">locale-gen</span>
+        </div>
+
         <div class="spacer"></div>
 
         <p class="text text--h3">Setting the hostname</p>
@@ -297,6 +302,7 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">There are tons of desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
         <div class="textarea">
             <span class="textarea-text">sudo pacman -Syu plasma sddm</span>
+            <br>
             <span class="textarea-text">sudo systemctl enable --now sddm</span>
         </div>
 
