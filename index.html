@@ -47,14 +47,6 @@
             <br>
             <span class="textarea-text"">sudo dd if=/path/to/your/iso of=/dev/&lt;YOUR DRIVE&gt; bs=1M status=progress</span><span class="textarea-text textarea-text--comment"">   # WARNING: this command is EXTREMELY dangerous, please ensure you specify the correct drive</span>
         </div>
-        <p class="text text--monospace"><strong>lsblk</strong>  | List disks, their partitions, alongside other useful information.</p>
-        <p class="text text--monospace"><strong>dd</strong>     | Low-level copying command.</p>
-        <p class="text text--monospace"><strong>if</strong>     | Input file.</p>
-        <p class="text text--monospace"><strong>of</strong>     | Output file/location.</p>
-        <p class="text text--monospace"><strong>bs</strong>     | Block size, <strong>1M</strong> is usually good enough by default. This determines how much data to copy in each pass.</p>
-        <p class="text text--monospace"><strong>status</strong> | Enable live output of the progress.</p>
-
-        <br>
 
         <p class="text">You are now ready to start the installation process. Restart your computer and boot into the installation drive.</p>
     </div>
@@ -82,12 +74,20 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
 
         <p class="text">If you are <strong>NOT</strong> planning on dual booting, I recommend cleaning your disks beforehand:</p>
         <div class="textarea">
-            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # this will only clear partition information and it will not clear data, usually this is good enough</span>
+            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # THIS WILL MAKE DATA UNACCESSIBLE, it doesn't actually clear the data, but it clears partition signatures making the data unaccessible</span>
         </div>
+        <p class="text text--monospace"><strong>-a</strong> | Wipe file system signatures.</p>
         <p class="text">If you want to fully wipe the drive:</p>
         <div class="textarea">
             <span class="textarea-text">dd if=/dev/zero of=/dev/&lt;YOUR DRIVE&gt; bs=1M count=&lt;COUNT&gt; status=progress</span><span class="textarea-text textarea-text--comment">   # remove count if you want to do a full reset, this value will determine how far into the drive to zero, I recommend setting this between 100 - 1000</span>
         </div>
+        <p class="text text--monospace"><strong>lsblk</strong>  | List disks, their partitions, alongside other useful information.</p>
+        <p class="text text--monospace"><strong>dd</strong>     | Low-level copying command.</p>
+        <p class="text text--monospace"><strong>if</strong>     | Input file.</p>
+        <p class="text text--monospace"><strong>of</strong>     | Output file/location.</p>
+        <p class="text text--monospace"><strong>bs</strong>     | Block size, <strong>1M</strong> is usually good enough by default. This determines how much data to copy in each pass.</p>
+        <p class="text text--monospace"><strong>count</strong>  | How many times to copy, remove this if you want to do a full reset.</p>
+        <p class="text text--monospace"><strong>status</strong> | Enable live output of the progress.</p>
 
         <div class="spacer"></div>
 
