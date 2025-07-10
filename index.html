@@ -96,6 +96,8 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
             <span class="textarea-text">cfdisk /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # we will use cfdisk to partition our drives, as it offers a friendly GUI environment</span>
         </div>
 
+        <p class="text">I recommend using <strong>GPT</strong> for the partition table layout.</p>
+
         <p class="text">Use <strong>New</strong> to create a partition. You will create three:</p>
         <p class="text"><span class="text--monospace"><strong>Partition 1</strong></span> | Make this <strong>100M</strong> in size. You will use this as your EFI boot partition. Which will contain the files that tell your system how to boot.</p>
         <p class="text"><span class="text--monospace"><strong>Partition 2</strong></span> | Make this <strong>4G</strong> in size. You will use this as your swap partition. Which will store excess memory/ram in the case that it overflows.</p>
