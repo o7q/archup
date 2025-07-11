@@ -96,7 +96,11 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
             <span class="textarea-text">cfdisk /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # we will use cfdisk to partition our drives, as it offers a friendly GUI environment</span>
         </div>
 
-        <p class="text">I recommend using <strong>GPT</strong> for the partition table layout.</p>
+        <p class="text"><i>I recommend using <strong>GPT</strong> for the partition table layout.</i></p>
+
+        <p class="text">If you have any other drives you want to partition, I would recommend doing it now.</p>
+
+        <br>
 
         <p class="text">Use <strong>New</strong> to create a partition. You will create three:</p>
         <p class="text"><span class="text--monospace"><strong>Partition 1</strong></span> | Make this <strong>100M</strong> in size. You will use this as your EFI boot partition. Which will contain the files that tell your system how to boot.</p>
@@ -129,6 +133,14 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
             <span class="textarea-text">swapon /dev/&lt;YOUR SECOND PARTITION&gt;</span><span class="textarea-text textarea-text--comment">           # enable the swap partition</span>
         </div>
         <p class="text text--monospace"><strong>--mkdir</strong> | Creates directories recursively to ensure they exist.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text">If you have additional internal drives, I would recommend mounting them now by first creating a new directory in <strong>/mnt</strong>.</p>
+        <p class="text">Here is an example:</p>
+        <div class="textarea">
+            <span class="textarea-text">mount --mkdir /dev/nvme1n1p1 /mnt/Storage</span>
+        </div>
 
         <div class="spacer"></div>
 
@@ -330,7 +342,7 @@ nvme0n1     259:0    0 931.5G  0 disk
         <div class="spacer"></div>
 
         <p class="text text--h3">Drive auto-mounting</p>
-        <p class="text">By default, extra drives will not be automatically mounted on boot.</p>
+        <p class="text">By default, extra drives will not be automatically mounted on boot, unless you mounted all of your drives in <strong>Step 2</strong>. Any drive mounted before running <strong>genfstab</strong> will be setup for auto-mounting.</p>
 
         <p class="text">Start by creating a mount folder:</p>
         <div class="textarea">
