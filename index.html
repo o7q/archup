@@ -319,7 +319,16 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">There are tons of desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
         <div class="textarea">
             <span class="textarea-text">sudo pacman -Syu plasma sddm</span>
-            <br>
+        </div>
+
+        <p class="text text--h3">Additional Packages</p>
+        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
+        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
+
+        <div class="spacer"></div>
+
+        <p class="text">After you've installed plasma and any additional packages, you can enable the desktop environment:</p>
+        <div class="textarea">
             <span class="textarea-text">sudo systemctl enable --now sddm</span>
         </div>
 
@@ -397,12 +406,6 @@ nvme0n1     259:0    0 931.5G  0 disk
             <span class="textarea-text">sudo fstrim -v /</span><span class="textarea-text textarea-text--comment">   # '/' species the root directory</span>
         </div>
         <p class="text text--monospace"><strong>-v</strong> | Enable verbose logging.</p>
-
-        <div class="spacer"></div>
-
-        <p class="text text--h3">Useful Packages</p>
-        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
-        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
 
         <!-- <div class="spacer"></div>
 
