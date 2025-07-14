@@ -123,7 +123,7 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
             <span class="textarea-text textarea-text--comment">          # creates the swap partition</span>
         </div>
 
-        <p class="text">Next, you need to mount the partitions in order to be accessed:</p>
+        <p class="text">Next, you need to mount the partitions in order for them to be accessed:</p>
 
         <div class="textarea">
             <span class="textarea-text">mount /dev/&lt;YOUR THIRD PARTITION&gt; /mnt</span><span class="textarea-text textarea-text--comment">        # /mnt (mount) is where your root drive will be mounted</span>
@@ -158,10 +158,10 @@ nvme0n1     259:0    0 931.5G  0 disk
     <div class="section">
         <p class="text text--h2">Step 3: Installing the system</p>
         <p class="text"><strong>pacstrap</strong> will be used to install the system with the following packages:</p>
+        <p class="text">If you are installing on a laptop, or any system with embedded peripherals: I recommend installing <strong>sof-firmware</strong> as well.</p>
         <div class="textarea">
             <span class="textarea-text">pacstrap /mnt base base-devel linux linux-firmware grub efibootmgr networkmanager nano</span>
         </div>
-        <p class="text">If you are installing on a laptop, or any system with embedded peripherals. I recommend installing <strong>sof-firmware</strong> as well.</p>
         <p class="text text--monospace"><strong>pacstrap</strong>       | Package manager used for installing the system.</p>
         <p class="text text--monospace"><strong>/mnt</strong>           | Specify to install to the "/mnt" directory, which is your root system.</p>
         <p class="text text--monospace"><strong>base</strong>           | Core packages.</p>
