@@ -74,7 +74,7 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
 
         <p class="text">If you are <strong>NOT</strong> planning on dual booting, I recommend cleaning your disks beforehand:</p>
         <div class="textarea">
-            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # THIS WILL MAKE DATA UNACCESSIBLE, it doesn't actually clear the data, but it clears partition signatures making the data unaccessible</span>
+            <span class="textarea-text">wipefs -a /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # THIS WILL MAKE DATA INACCESSIBLE, it doesn't actually clear the data, but it clears partition signatures making the data inaccessible</span>
         </div>
         <p class="text text--monospace"><strong>-a</strong> | Wipe file system signatures.</p>
         <p class="text">If you want to fully wipe the drive:</p>
