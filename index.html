@@ -307,14 +307,17 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text text--h2">Step 6: Configuring the bootloader</p>
 
         <div class="textarea">
-            <span class="textarea-text">grub-install /dev/&lt;YOUR DRIVE&gt;</span>
+            <span class="textarea-text">grub-install /dev/&lt;YOUR DRIVE&gt;</span><span class="textarea-text textarea-text--comment">   # install grub to specified drive.</span>
             <br>
-            <span class="textarea-text">grub-mkconfig -o /boot/grub/grub.cfg</span>
+            <span class="textarea-text">grub-mkconfig -o /boot/grub/grub.cfg</span><span class="textarea-text textarea-text--comment">   # generate the grub config.</span>
+            <br>
+            <span class="textarea-text">umount -R /mnt</span>
             <br>
             <span class="textarea-text">exit</span>
             <br>
             <span class="textarea-text">reboot</span>
         </div>
+        <p class="text text--monospace"><strong>-R</strong> | Recursively unmount everything in <strong>/mnt</strong>.</p>
     </div>
 
     <div class="section">
@@ -324,13 +327,7 @@ nvme0n1     259:0    0 931.5G  0 disk
             <span class="textarea-text">sudo pacman -Syu plasma sddm</span>
         </div>
 
-        <p class="text text--h3">Additional Packages</p>
-        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
-        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
-
-        <div class="spacer"></div>
-
-        <p class="text">After you've installed plasma and any additional packages, you can enable the desktop environment:</p>
+        <p class="text">After you've installed plasma, you can enable the desktop environment:</p>
         <div class="textarea">
             <span class="textarea-text">sudo systemctl enable --now sddm</span>
         </div>
@@ -350,6 +347,12 @@ nvme0n1     259:0    0 931.5G  0 disk
             <br>
             <span class="textarea-text">sudo reboot now</span>
         </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Additional Packages</p>
+        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
+        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
 
         <div class="spacer"></div>
 
