@@ -311,29 +311,36 @@ nvme0n1     259:0    0 931.5G  0 disk
             <br>
             <span class="textarea-text">grub-mkconfig -o /boot/grub/grub.cfg</span><span class="textarea-text textarea-text--comment">   # generate the grub config.</span>
             <br>
-            <span class="textarea-text">umount -R /mnt</span>
-            <br>
             <span class="textarea-text">exit</span>
             <br>
             <span class="textarea-text">reboot</span>
         </div>
-        <p class="text text--monospace"><strong>-R</strong> | Recursively unmount everything in <strong>/mnt</strong>.</p>
     </div>
 
     <div class="section">
         <p class="text text--h2">Step 7: Installing the desktop manager</p>
-        <p class="text">There are tons of desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
+        <p class="text">There are many desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
         <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu plasma sddm</span>
+            <span class="textarea-text">sudo pacman -Syu plasma sddm</span><span class="textarea-text textarea-text--comment">   # I highly recommend installing a terminal such as "konsole" as well, as none will be installed by default. see the additional packages section for recommendations.</span>
         </div>
 
-        <p class="text">After you've installed plasma, you can enable the desktop environment:</p>
+        <p class="text">You will be prompted with various options, I recommend you keep everything default except for choosing <strong>pipewire</strong>.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Additional Packages</p>
+        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
+        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
+
+        <div class="spacer"></div>
+
+        <p class="text">After you've installed plasma and any additional packages, you can enable the desktop environment:</p>
         <div class="textarea">
             <span class="textarea-text">sudo systemctl enable --now sddm</span>
         </div>
 
-        <p class="text">After this, you should be placed directly inside <strong>sddm</strong>. You can login with the password you set in <strong>step 5</strong>.</p>
-        <p class="text">If you followed the steps properly, you should now have a functional KDE Plasma desktop environment. No apps will be installed by default, follow the next step for recommendations.</p>
+        <p class="text">After this, you will be placed directly inside <strong>sddm</strong>. You can login with the password you set in <strong>step 5</strong>.</p>
+        <p class="text">If you followed these steps properly, you should now have a functional KDE Plasma desktop environment.</p>
     </div>
 
     <div class="section">
@@ -350,14 +357,8 @@ nvme0n1     259:0    0 931.5G  0 disk
 
         <div class="spacer"></div>
 
-        <p class="text text--h3">Additional Packages</p>
-        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
-        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
-
-        <div class="spacer"></div>
-
         <p class="text text--h3">Drive auto-mounting</p>
-        <p class="text">By default, extra drives will not be automatically mounted on boot, unless you mounted all of your drives in <strong>Step 2</strong>. Any drive mounted before running <strong>genfstab</strong> will be setup for auto-mounting.</p>
+        <p class="text">By default, extra drives will not be automatically mounted on boot, unless you mounted all of your drives in <strong>Step 2</strong>. Any drive mounted before running <strong>genfstab</strong> will be setup for auto-mounting. If you did that, you can skip this step.</p>
 
         <p class="text">Start by creating a mount folder:</p>
         <div class="textarea">
