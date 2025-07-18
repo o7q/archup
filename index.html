@@ -414,17 +414,16 @@ nvme0n1     259:0    0 931.5G  0 disk
         </div>
         <p class="text text--monospace"><strong>-v</strong> | Enable verbose logging.</p>
 
-        <!-- <div class="spacer"></div>
+        <div class="spacer"></div>
 
-        <p class="text text--h3">virt-manager</p>
-        <p class="text">For a basic virt-manager setup, you can install the following packages:</p>
+        <p class="text text--h3">Virtual Machines</p>
+        <p class="text">If you would like to setup a virtual machine, I highly recommend <strong>virt-manager</strong>.</p>
+        <p class="text">To install it, you need to install the following packages </p>
         <div class="textarea">
-            <span class="textarea-text">sudo pacman -S virt-manager qemu-desktop</span>
-            <br>
-            <span class="textarea-text">sudo pacman -S swtpm</span><span class="textarea-text textarea-text--comment">   # only if you need TPM</span>
+            <span class="textarea-text">sudo pacman -Syu virt-manager qemu-desktop dnsmasq swtpm</span><span class="textarea-text textarea-text--comment">   # only install swtpm if you need TPM</span>
             <br>
             <span class="textarea-text">sudo systemctl enable --now libvirtd</span>
-        </div> -->
+        </div>
     </div>
 </body>
 
