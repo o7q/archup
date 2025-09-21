@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
+    <title>Archup - Hyprland</title>
+
+    <link rel="stylesheet" href="styles/body.css">
+    <link rel="stylesheet" href="styles/text.css">
+    <link rel="stylesheet" href="styles/header.css">
+    <link rel="stylesheet" href="styles/containers.css">
+</head>
+
+<body>
+    <a target="_blank" href="https://github.com/o7q/archup"><img src="assets/images/arch.png" class="center" style="width: 100px;"></a>
+    <p class="text text--h1 center" style="line-height: 0px;">Archup</p>
+    <p class="text center">A straight to the point Arch Linux installation guide for beginners.</p>
+
+    <div class="section">
+        <p class="text text--h2">Step 1: Installing Hyprland</p>
+        <p class="text">Setting up Hyprland is quite an involved process. This section will attempt to setup a barebones system that you can build off of.</p>
+
+        <p class="text"><strong>If you run into issues, I highly recommend consulting the <a target="_blank" class="text" href="https://wiki.hypr.land">Hyprland Wiki</a>!</strong></p>
+
+        <div class="spacer"></div>
+
+        <p class="text">First start by installing the required Hyprland base packages:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu hyprland sddm kitty</span><span class="textarea-text textarea-text--comment">   # I recommend using Kitty as the terminal emulator as it's the default for Hyprland.</span>
+        </div>
+
+        <p class="text">Enable <strong>sddm</strong>:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo systemctl enable --now sddm</span>
+        </div>
+
+        <p class="text">If you are using an NVidia GPU you need to install the appropriate drivers:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu nvidia</span>
+            <span class="textarea-text textarea-text--comment">   # You may have to reboot after installing if you are unable to load into Hyprland.</span>
+        </div>
+
+                <p class="text">If you are using an NVidia GPU you need to install the appropriate drivers:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu nvidia</span>
+            <span class="textarea-text textarea-text--comment">   # You may have to reboot after installing if you are unable to load into Hyprland.</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 2: Fixing audio and screenshares</p>
+    </div>
+</body>
+
+</html>

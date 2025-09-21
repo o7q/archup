@@ -5,13 +5,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="assets/images/favicon.png">
-    <title>Archup Packages</title>
+    <title>Archup - KDE Plasma</title>
 
     <link rel="stylesheet" href="styles/body.css">
     <link rel="stylesheet" href="styles/text.css">
     <link rel="stylesheet" href="styles/header.css">
     <link rel="stylesheet" href="styles/containers.css">
-
 </head>
 
 <body>
@@ -20,18 +19,30 @@
     <p class="text center">A straight to the point Arch Linux installation guide for beginners.</p>
 
     <div class="section">
-        <p class="text text--h2">Packages</p>
-        <p class="text">These are the packages I personally use and recommend. I highly recommend looking into the packages further to ensure you are getting what you want. Because the point of Linux, especially Arch, is to tailor everything to you. So make it yours! Don't let me control your system, these are mere recommendations.</p>
+        <p class="text text--h2">Step 1: Installing KDE Plasma</p>
+        <p class="text">Installing KDE Plasma is quite straight-forward, first start by installing the following packages:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu plasma sddm konsole</span>
+            <span class="textarea-text textarea-text--comment">   # I recommend you install the Konsole terminal emulator as it's tightly integrated with KDE.</span>
+        </div>
 
+        <p class="text">You will be prompted with various options, I recommend you keep everything default except for choosing <strong>pipewire</strong>.</p>
+
+        <p class="text">Enable <strong>sddm</strong>:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo systemctl enable --now sddm</span>
+        </div>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Step 2: Installing Recommend Packages</p>
         <p class="text"><strong>Highly Recommended</strong></p>
-        <p class="text text--monospace"><strong>konsole</strong>          | A terminal with great KDE integration.</p>
         <p class="text text--monospace"><strong>dolphin</strong>          | A file manager.</p>
         <p class="text text--monospace"><strong>kate</strong>             | A text editor.</p>
         <p class="text text--monospace"><strong>ark</strong>              | An archive manager.</p>
         <p class="text text--monospace"><strong>gwenview</strong>         | An image viewer.</p>
         <p class="text text--monospace"><strong>mpv</strong>              | A very performant media player.</p>
         <p class="text text--monospace"><strong>vlc</strong>              | Another media player. I'd recommend trying mpv first.</p>
-        <p class="text text--monospace"><strong>ufw</strong>              | A basic firewall.</p>
         <p class="text text--monospace"><strong>firefox</strong>          | A browser.</p>
 
         <div class="spacer"></div>
@@ -55,20 +66,7 @@
         <p class="text text--monospace"><strong>kio-admin</strong>        | Useful for starting KDE applications as admin.</p>
         <p class="text text--monospace"><strong>noto-fonts-cjk</strong>   | Support for Chinese, Japanese, and Korean fonts.</p>
         <p class="text text--monospace"><strong>noto-fonts-extra</strong> | Extra language support.</p>
-        <p class="text text--monospace"><strong>htop</strong>             | A terminal-based system monitor utility.</p>
-
-        <div class="spacer"></div>
-
-        <p class="text"><strong>Fun</strong></p>
-        <p class="text text--monospace"><strong>fastfetch</strong> | Display system information.</p>
-        <p class="text text--monospace"><strong>cmatrix</strong>   | Matrix visuals.</p>
-        <p class="text text--monospace"><strong>cava</strong>      | A reactive audio waveform.</p>
-
-        <div class="spacer"></div>
-
-        <p class="text"><strong>Development</strong></p>
-        <p class="text text--monospace"><strong>rust</strong> | The Rust programming language.</p>
-        <p class="text text--monospace"><strong>npm</strong>  | Node.js npm.</p>
+        <p class="text text--monospace"><strong>btop</strong>             | A terminal-based system monitor utility.</p>
 
         <div class="spacer"></div>
 
@@ -79,18 +77,8 @@
         <p class="text"><strong>Optional</strong></p>
         <p class="text text--monospace"><strong>brave-bin</strong>                 | Brave browser.</p>
         <p class="text text--monospace"><strong>gpu-screen-recorder-ui</strong>    | An NVIDIA shadowplay like screen recorder.</p>
-        <p class="text text--monospace"><strong>visual-studio-code-bin</strong>    | Visual Studio Code.</p>
-        <p class="text text--monospace"><strong>protontricks</strong>              | A proton utility.</p>
-        <p class="text text--monospace"><strong>heroic-games-launcher-bin</strong> | A games launcher, primarily for Epic Games.</p>
-        <p class="text text--monospace"><strong>parsec-bin</strong>                | Remote desktop tool.</p>
-        <p class="text text--monospace"><strong>spicetify-cli</strong>             | Themes for Spotify.</p>
+        <p class="text text--monospace"><strong>vscodium-bin</strong>              | Visual Studio Code.</p>
         <p class="text text--monospace"><strong>vesktop-bin</strong>               | Discord fork with improvements.</p>
-
-        <div class="spacer"></div>
-
-        <p class="text"><strong>Fun AUR Packages</strong></p>
-        <p class="text text--monospace"><strong>cbonsai</strong> | A bonsai tree. If you want that.</p>
-        <p class="text text--monospace"><strong>ani-cli</strong> | Play anime via the terminal.</p>
     </div>
 </body>
 

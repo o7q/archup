@@ -126,11 +126,13 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
         <p class="text">Next, you need to mount the partitions in order for them to be accessed:</p>
 
         <div class="textarea">
-            <span class="textarea-text">mount /dev/&lt;YOUR THIRD PARTITION&gt; /mnt</span><span class="textarea-text textarea-text--comment">        # /mnt (mount) is where your root drive will be mounted</span>
+            <span class="textarea-text">mount /dev/&lt;YOUR THIRD PARTITION&gt; /mnt</span>
+            <span class="textarea-text textarea-text--comment">   # /mnt (mount) is where your root drive will be mounted</span>
             <br>
             <span class="textarea-text">mount --mkdir /dev/&lt;YOUR FIRST PARTITION&gt; /mnt/boot/efi</span>
             <br>
-            <span class="textarea-text">swapon /dev/&lt;YOUR SECOND PARTITION&gt;</span><span class="textarea-text textarea-text--comment">           # enable the swap partition</span>
+            <span class="textarea-text">swapon /dev/&lt;YOUR SECOND PARTITION&gt;</span>
+            <span class="textarea-text textarea-text--comment">      # enable the swap partition</span>
         </div>
         <p class="text text--monospace"><strong>--mkdir</strong> | Creates directories recursively to ensure they exist.</p>
 
@@ -139,7 +141,8 @@ nvme0n1     259:0    0 931.5G  0 disk</span>
         <p class="text">If you have additional internal drives, I would recommend mounting them now by first creating a new directory in <strong>/mnt</strong>.</p>
         <p class="text">Here is an example:</p>
         <div class="textarea">
-            <span class="textarea-text">mount --mkdir /dev/nvme1n1p1 /mnt/Storage</span>
+            <span class="textarea-text">mount --mkdir /dev/nvme1n1p1 /mnt/mnt/Storage</span>
+            <span class="textarea-text textarea-text--comment">   # you do /mnt/mnt because /mnt by itself is the virtual /mnt used by the installation medium</span>
         </div>
 
         <div class="spacer"></div>
@@ -318,44 +321,21 @@ nvme0n1     259:0    0 931.5G  0 disk
     </div>
 
     <div class="section">
-        <p class="text text--h2">Step 7: Installing the desktop manager</p>
-        <p class="text">There are many desktop managers to choose, for the sake of this guide and for beginners, I highly recommend using <strong>KDE Plasma</strong>:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu plasma sddm konsole</span><span class="textarea-text textarea-text--comment">   # I highly recommend installing a terminal such as "konsole" as well, as none will be installed by default. see the additional packages section for recommendations.</span>
-        </div>
+        <p class="text text--h2">Step 7: Installing a desktop environment</p>
+        <!-- <p class="text">There are many desktop environments to choose from, this guide provides setup for the two environments. It's highly recommend to research each to decide the best for you, but I <strong>HIGHLY</strong> recommend using <strong>KDE Plasma</strong>.</strong></p> -->
 
-        <p class="text">You will be prompted with various options, I recommend you keep everything default except for choosing <strong>pipewire</strong>.</p>
+        <p class="text">There are many desktop environments to choose from, this guide provides setup for KDE Plasma.</p>
 
-        <div class="spacer"></div>
+        <a target="_blank" class="text text--h3" href="plasma.html">KDE Plasma</a>
+        <p class="text">I <strong>HIGHLY</strong> recommend KDE Plasma for almost everyone, as it works right out of the box and requires minimal extra setup. It's extremely feature rich and stable. This comes at the cost of a slightly more bloated system, as the KDE ecosystem is very tightly integrated with itself and requries multiple background services running at once.</p>
 
-        <p class="text text--h3">Additional Packages</p>
-        <p class="text">I've curated a list of common packages I tend to install on my own system:</p>
-        <a target="_blank" class="text text--h3" href="packages.html">You can find them here</a>
-
-        <div class="spacer"></div>
-
-        <p class="text">After you've installed plasma and any additional packages, you can enable the desktop environment:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo systemctl enable --now sddm</span>
-        </div>
-
-        <p class="text">After this, you will be placed directly inside <strong>sddm</strong>. You can login with the password you set in <strong>step 5</strong>.</p>
-        <p class="text">If you followed these steps properly, you should now have a functional KDE Plasma desktop environment.</p>
+        <!-- <a target="_blank" class="text text--h3 text--indent" href="hyprland.html">Hyprland</a>
+        <p class="text text--indent">I only recommend Hyprland to very <strong>experienced users</strong>, it provides a canvas to create an extremely trimmed down and nimble system at the cost of complexity. You have full control over everthing as it forces you to do so. This guide will attempt to explain a basic Hyprland setup, but it is ultimately up to you to research and read the <a target="_blank" class="text" href="https://wiki.hypr.land">Hyprland Wiki</a>.</p> -->
     </div>
 
     <div class="section">
         <p class="text text--h2">Recommendations</p>
-        <p class="text">There are a few important extra things to install and configure:</p>
-
-        <p class="text text--h3">NVIDIA drivers</p>
-        <p class="text">If you have an NVIDIA graphics card, you should install the appropriate drivers.</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu nvidia</span>
-            <br>
-            <span class="textarea-text">sudo reboot now</span>
-        </div>
-
-        <div class="spacer"></div>
+        <p class="text">There are a few important, but optional extra things to install and configure:</p>
 
         <p class="text text--h3">Drive auto-mounting</p>
         <p class="text">By default, extra drives will not be automatically mounted on boot, unless you mounted all of your drives in <strong>Step 2</strong>. Any drive mounted before running <strong>genfstab</strong> will be setup for auto-mounting. If you did that, you can skip this step.</p>
@@ -363,6 +343,8 @@ nvme0n1     259:0    0 931.5G  0 disk
         <p class="text">Start by creating a mount folder:</p>
         <div class="textarea">
             <span class="textarea-text">sudo mkdir /mnt/&lt;MOUNT DIRECTORY&gt;</span>
+            <br>
+            <span class="textarea-text">sudo mount /dev/&lt;DRIVE&gt; mnt/&lt;MOUNT DIRECTORY&gt;</span>
             <br>
             <span class="textarea-text">sudo chown -R &lt;USER&gt;:&lt;USER&gt; /mnt/&lt;MOUNT DIRECTORY&gt;</span>
         </div>
