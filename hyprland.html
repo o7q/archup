@@ -19,8 +19,8 @@
     <p class="text center">A straight to the point Arch Linux installation guide for beginners.</p>
 
     <div class="section">
-        <p class="text text--h2">Step 1: Installing Hyprland</p>
-        <p class="text">Setting up Hyprland is quite an involved process. This section will attempt to setup a barebones system that you can build off of.</p>
+        <p class="text text--h2">Installing Hyprland</p>
+        <p class="text">Setting up Hyprland is quite an involved process. This section will attempt to setup a barebones system that you can build off of. It will not hold your hand, it will rely on you to do your own research.</p>
 
         <p class="text"><strong>If you run into issues, I highly recommend consulting the <a target="_blank" class="text" href="https://wiki.hypr.land">Hyprland Wiki</a>!</strong></p>
 
@@ -42,15 +42,64 @@
             <span class="textarea-text textarea-text--comment">   # You may have to reboot after installing if you are unable to load into Hyprland.</span>
         </div>
 
-                <p class="text">If you are using an NVidia GPU you need to install the appropriate drivers:</p>
+        <div class="spacer"></div>
+
+        <p class="text">Because Hyprland is modular and is entirely designed around your preference. This guide will be split up into optional sections rather than steps. It is up to you to pick and choose what you want. I would highly recommend following the <strong>Important Fixes</strong> section.</p>
+    </div>
+
+    <div class="section">
+        <p class="text text--h2">Important Fixes</p>
+
+        <p class="text text--h3">Fixing audio and screenshares</p>
+        <p class="text">To fix audio and screenshare functionality you must ensure the following services are installed and running:</p>
         <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu nvidia</span>
-            <span class="textarea-text textarea-text--comment">   # You may have to reboot after installing if you are unable to load into Hyprland.</span>
+            <span class="textarea-text">sudo pacman -Syu pipewire pipewire-pulse wireplumber xdg-desktop-portal-hyprland</span>
+            <br>
+            <span class="textarea-text">systemctl enable --now --user pipewire</span>
+            <br>
+            <span class="textarea-text">systemctl enable --now --user pipewire-pulse</span>
+            <br>
+            <span class="textarea-text">systemctl enable --now --user wireplumber</span>
+        </div>
+        <p class="text">You may have to reboot your system.</p>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Fixing authentication polkit</p>
+        <p class="text">You can fix authentication issues by configuring <strong>hyprpolkitagent</strong>.</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu hyprpolkitagent</span>
+            <br>
+            <span class="textarea-text">systemctl --user start hyprpolkitagent</span>
+            <br>
+            <span class="textarea-text">exec-one = systemctl --user start hyprpolkitagent</span>
+            <span class="textarea-text textarea-text--comment">   # Add this line to your Hyprland config: ~/.config/hypr/hyprland.conf</span>
+        </div>
+
+        <div class="spacer"></div>
+
+        <p class="text text--h3">Fixing time sync</p>
+        <p class="text">Sometimes the time won't sync correctly. To fix this enable <strong>ntp</strong>.</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo timedatectl set-ntp true</span>
         </div>
     </div>
 
     <div class="section">
-        <p class="text text--h2">Step 2: Fixing audio and screenshares</p>
+        <p class="text text--h2">Configuring an application launcher</p>
+
+        <p class="text">Wofi will be used as the application launcher:</p>
+        <div class="textarea">
+            <span class="textarea-text">sudo pacman -Syu wofi</span>
+        </div>
+        <p class="text">Wofi should work by default by pushing <i>MENU + R</i>. If it doesn't: add the following lines to your Hyprland config: </p>
+        <div class="textarea">
+            <span class="textarea-text">$menu = wofi --show drun</span>
+            <br>
+            <span class="textarea-text">bind = $mainMod, R, exec, $menu</span>
+        </div>
+        <p class="text">You can configure Wofi using its config located in: <i>~/.config/wofi</i></p>
+        <p class="text">If you want a basic theme to get up and running, I'd recommend the <a target="_blank" class="text" href="https://github.com/dracula/wofi">Dracula Theme</a>.</p>
     </div>
 </body>
 
