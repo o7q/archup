@@ -19,87 +19,170 @@
     <p class="text center">A straight to the point Arch Linux installation guide for beginners.</p>
 
     <div class="section">
-        <p class="text text--h2">Installing Hyprland</p>
-        <p class="text">Setting up Hyprland is quite an involved process. This section will attempt to setup a barebones system that you can build off of. It will not hold your hand, it will rely on you to do your own research.</p>
+        <p class="text text--h2">Hyprland Cheat Sheet</p>
+        <p class="text">Setting up Hyprland is quite an involved process. This section is not a guide as it will only provide useful packages and basic configurations, it does not hold your hand in any way and will require you to do your own research.</p>
 
-        <p class="text"><strong>If you run into issues, I highly recommend consulting the <a target="_blank" class="text" href="https://wiki.hypr.land">Hyprland Wiki</a>!</strong></p>
+        <p class="text"><strong>If you run into issues, consult the <a target="_blank" class="text" href="https://wiki.hypr.land">Hyprland Wiki</a>!</strong></p>
 
-        <div class="spacer"></div>
-
-        <p class="text">First start by installing the required Hyprland base packages:</p>
         <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu hyprland sddm kitty</span><span class="textarea-text textarea-text--comment">   # I recommend using Kitty as the terminal emulator as it's the default for Hyprland.</span>
-        </div>
+            <span class="textarea-text">Hyprland Configuration Cheat Sheet
 
-        <p class="text">Enable <strong>sddm</strong>:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo systemctl enable --now sddm</span>
-        </div>
+======== PACKAGES ========
+sddm
+hyprland
+hyprpaper        - for wallpapers
+hyprshot         - for screenshots
+kitty            - terminal
+rofi
+waybar
+mako             - desktop notification daemon
+nvidia           - NVIDIA graphics driver
+xed              - text editor
+thunar           - file browser
+gvfs             - file browser extension (removeable drives, trash, etc.)
+tumbler          - file browser extension (image thumbnails)
+xarchiver        - gui archiver
+imv              - image viewer
+btop             - task viewer
+mpv              - media player
+f3d              - 3d viewer
+nwg-look         - for GTK theming
+kvantum          - for QT theming
+noto-fonts
+noto-fonts-cjk   - asian characters
+noto-fonts-emoji
+noto-fonts-extra
+ttf-noto-nerd    - nerd font, fixes some missing characters, such as for waybar
+hyprpolkitagent  - polkit authentication agent
+==========================
 
-        <p class="text">If you are using an NVidia GPU you need to install the appropriate drivers:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu nvidia</span>
-            <span class="textarea-text textarea-text--comment">   # You may have to reboot after installing if you are unable to load into Hyprland.</span>
-        </div>
 
-        <div class="spacer"></div>
 
-        <p class="text">Because Hyprland is modular and is entirely designed around your preference. This guide will be split up into optional sections rather than steps. It is up to you to pick and choose what you want. I would highly recommend following the <strong>Important Fixes</strong> section.</p>
-    </div>
+======== DOTFILES TO BACKUP ========
+waybar
+rofi
+hypr
+kitty
+====================================
 
-    <div class="section">
-        <p class="text text--h2">Important Fixes</p>
 
-        <p class="text text--h3">Fixing audio and screenshares</p>
-        <p class="text">To fix audio and screenshare functionality you must ensure the following services are installed and running:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu pipewire pipewire-pulse wireplumber xdg-desktop-portal-hyprland</span>
-            <br>
-            <span class="textarea-text">systemctl enable --now --user pipewire</span>
-            <br>
-            <span class="textarea-text">systemctl enable --now --user pipewire-pulse</span>
-            <br>
-            <span class="textarea-text">systemctl enable --now --user wireplumber</span>
-        </div>
-        <p class="text">You may have to reboot your system.</p>
 
-        <div class="spacer"></div>
+======== START THE FOLLOWING SERVICES ========
+> fixes audio and screenshare issues
 
-        <p class="text text--h3">Fixing authentication polkit</p>
-        <p class="text">You can fix authentication issues by configuring <strong>hyprpolkitagent</strong>.</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu hyprpolkitagent</span>
-            <br>
-            <span class="textarea-text">systemctl --user start hyprpolkitagent</span>
-            <br>
-            <span class="textarea-text">exec-one = systemctl --user start hyprpolkitagent</span>
-            <span class="textarea-text textarea-text--comment">   # Add this line to your Hyprland config: ~/.config/hypr/hyprland.conf</span>
-        </div>
+pipewire                    [user]
+pipewire-pulse              [user]
+wireplumber                 [user]
+xdg-desktop-portal-hyprland [user]
+hyprpolkitagent             [user]
+==============================================
 
-        <div class="spacer"></div>
 
-        <p class="text text--h3">Fixing time sync</p>
-        <p class="text">Sometimes the time won't sync correctly. To fix this enable <strong>ntp</strong>.</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo timedatectl set-ntp true</span>
-        </div>
-    </div>
 
-    <div class="section">
-        <p class="text text--h2">Configuring an application launcher</p>
+======== CHANGE WALLPAPER ========
+nano ~/.config/hypr/hyprpaper.conf
 
-        <p class="text">Wofi will be used as the application launcher:</p>
-        <div class="textarea">
-            <span class="textarea-text">sudo pacman -Syu wofi</span>
-        </div>
-        <p class="text">Wofi should work by default by pushing <i>MENU + R</i>. If it doesn't: add the following lines to your Hyprland config: </p>
-        <div class="textarea">
-            <span class="textarea-text">$menu = wofi --show drun</span>
-            <br>
-            <span class="textarea-text">bind = $mainMod, R, exec, $menu</span>
-        </div>
-        <p class="text">You can configure Wofi using its config located in: <i>~/.config/wofi</i></p>
-        <p class="text">If you want a basic theme to get up and running, I'd recommend the <a target="_blank" class="text" href="https://github.com/dracula/wofi">Dracula Theme</a>.</p>
+preload=/path/to/image.png
+wallpaper=&lt;MONITOR&gt;,/path/to/image.png
+==================================
+
+
+
+======== MONITOR CONFIG TEMPLATE ========
+monitor=&lt;MONITOR&gt;,1920x1080@60,0x0,1   # (use "hyprctl monitors" to get IDs)
+=========================================
+
+
+
+======== KITTY STYLING ========
+nano ~/.config/kitty/kitty.conf
+background_opacity 0.9
+background #15191a
+foreground #b8faff
+===============================
+
+
+
+======== CLIPBOARD HISTORY ========
+exec-once = wl-paste --type text --watch cliphist store
+exec-once = wl-paste --type image --watch cliphist store
+
+bind = $mainMod, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
+===================================
+
+
+
+======== SCREENSHOTS ========
+bind = , PRINT, exec, hyprshot -m region --clipboard-only
+=============================
+
+
+
+======== DISABLE MOUSE ACCELERATION ========
+accel_profile = flat
+============================================
+
+
+
+======== HYPRPICKER ========
+bind = CTRL, PRINT, exec, hyprpicker -a
+============================
+
+
+
+======== DISABLE GRUB BOOT MENU ========
+sudo nano /etc/default/grub
+GRUB_TIMEOUT=0
+GRUB_TIMEOUT_STYLE=hidden
+sudo grub-mkconfig -o /boot/grub/grub.cfg
+========================================
+
+
+
+======== FIX TIME AUTO-SYNC ========
+sudo timedatectl set-ntp true
+====================================
+
+
+
+======== SDDM AUTOLOGIN ========
+sudo nano /etc/sddm.conf
+[Autologin]
+User=jame
+Session=hyprland.desktop
+================================
+
+
+
+======== FIX THUNAR TERMINAL OPEN ========
+Edit Custom Actions: kitty -d %f
+==========================================
+
+
+
+======== FIX DIRECTORY OPEN ========
+xdg-mime default thunar.desktop inode/directory
+====================================
+
+
+
+======== WAYBAR PRESETS ========
+https://github.com/Alexays/Waybar/wiki/Examples
+put in ~/.config/waybar
+================================
+
+
+======== KVANTUM CONFIG ========
+# force Kvantum if you want consistent theming across apps
+env = QT_STYLE_OVERRIDE,Kvantum
+================================
+
+
+
+======== GTK DARK THEME ========
+gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+================================
+        </span>
     </div>
 </body>
 

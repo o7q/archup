@@ -4,6 +4,10 @@
     line-height: 18px;
 }
 
+.text--hypr {
+    color: rgb(243, 255, 151) !important;
+}
+
 .text--monospace {
     font-family: monospace;
     white-space: pre-wrap;
