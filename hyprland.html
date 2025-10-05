@@ -32,6 +32,7 @@ sddm
 hyprland
 hyprpaper        - for wallpapers
 hyprshot         - for screenshots
+hypridle         - for idle sleeping
 kitty            - terminal
 rofi
 waybar
@@ -58,12 +59,11 @@ hyprpolkitagent  - polkit authentication agent
 
 
 
-======== DOTFILES TO BACKUP ========
-waybar
-rofi
+======== DOTFILES YOU PROBABLY WANT TO BACKUP ========
 hypr
+rofi
 kitty
-====================================
+======================================================
 
 
 
@@ -84,6 +84,18 @@ nano ~/.config/hypr/hyprpaper.conf
 
 preload=/path/to/image.png
 wallpaper=&lt;MONITOR&gt;,/path/to/image.png
+==================================
+
+
+
+======== ENABLE MONITOR IDLE ========
+nano ~/.config/hypr/hypridle.conf
+
+listener {
+        timeout = 60
+        on-timeout = hyprctl dispatch dpms off
+        on-resume = hyprctl dispatch dpms on
+}
 ==================================
 
 
@@ -168,7 +180,7 @@ xdg-mime default thunar.desktop inode/directory
 
 ======== WAYBAR PRESETS ========
 https://github.com/Alexays/Waybar/wiki/Examples
-put in ~/.config/waybar
+> Put in ~/.config/waybar
 ================================
 
 
