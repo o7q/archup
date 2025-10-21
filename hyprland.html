@@ -26,6 +26,7 @@
 
         <div class="textarea">
             <span class="textarea-text">Hyprland Configuration Cheat Sheet
+- This is my own personal Hyprland cheat sheet, it contains recommend programs and my own configurations. It's up to you to choose what you want.
 
 ======== PACKAGES ========
 sddm
@@ -34,6 +35,7 @@ hyprpaper         - for wallpapers
 hyprshot          - for screenshots
 hypridle          - for idle sleeping
 kitty             - terminal
+fish              - shell
 rofi
 waybar
 mako              - desktop notification daemon
@@ -60,11 +62,13 @@ hyprpolkitagent   - polkit authentication agent
 
 
 
-======== DOTFILES YOU PROBABLY WANT TO BACKUP ========
+======== DOTFILES YOU PROBABLY WANT TO BACKUP (if you have them) ========
 hypr
 rofi
 kitty
-======================================================
+fish
+oh-my-posh
+=========================================================================
 
 
 
@@ -80,6 +84,23 @@ hyprpolkitagent             [user]
 
 
 
+======== SETUP FISH SHELL ========
+chsh -s /bin/fish
+
+nano ~/.config/fish/config.fish
+    set fish_greeting
+==================================
+
+
+
+======== OH MY POSH FISH ========
+nano ~/.config/fish/config.fish
+    oh-my-posh init fish --config &lt;THEME&gt; | source
+=================================
+
+
+
+
 ======== CHANGE WALLPAPER ========
 nano ~/.config/hypr/hyprpaper.conf
 
@@ -91,12 +112,11 @@ wallpaper=&lt;MONITOR&gt;,/path/to/image.png
 
 ======== ENABLE MONITOR IDLE ========
 nano ~/.config/hypr/hypridle.conf
-
-listener {
-        timeout = 60
-        on-timeout = hyprctl dispatch dpms off
-        on-resume = hyprctl dispatch dpms on
-}
+    listener {
+            timeout = 60
+            on-timeout = hyprctl dispatch dpms off
+            on-resume = hyprctl dispatch dpms on
+    }
 ==================================
 
 
@@ -109,44 +129,49 @@ monitor=&lt;MONITOR&gt;,1920x1080@60,0x0,1   # (use "hyprctl monitors" to get ID
 
 ======== KITTY STYLING ========
 nano ~/.config/kitty/kitty.conf
-background_opacity 0.9
-background #15191a
-foreground #b8faff
+    background_opacity 0.9
+    background #15191a
+    foreground #b8faff
 ===============================
 
 
 
 ======== CLIPBOARD HISTORY ========
-exec-once = wl-paste --type text --watch cliphist store
-exec-once = wl-paste --type image --watch cliphist store
+nano ~/.config/hypr/hyprland.conf
+    exec-once = wl-paste --type text --watch cliphist store
+    exec-once = wl-paste --type image --watch cliphist store
 
-bind = $mainMod, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
+    bind = $mainMod, V, exec, cliphist list | rofi -dmenu -display-columns 2 | cliphist decode | wl-copy
 ===================================
 
 
 
 ======== SCREENSHOTS ========
-bind = , PRINT, exec, hyprshot -m region --clipboard-only
+nano ~/.config/hypr/hyprland.conf
+    bind = , PRINT, exec, hyprshot -m region --clipboard-only
 =============================
 
 
 
 ======== DISABLE MOUSE ACCELERATION ========
-accel_profile = flat
+nano ~/.config/hypr/hyprland.conf
+    accel_profile = flat
 ============================================
 
 
 
 ======== HYPRPICKER ========
-bind = CTRL, PRINT, exec, hyprpicker -a
+nano ~/.config/hypr/hyprland.conf
+    bind = CTRL, PRINT, exec, hyprpicker -a
 ============================
 
 
 
 ======== DISABLE GRUB BOOT MENU ========
 sudo nano /etc/default/grub
-GRUB_TIMEOUT=0
-GRUB_TIMEOUT_STYLE=hidden
+    GRUB_TIMEOUT=0
+    GRUB_TIMEOUT_STYLE=hidden
+
 sudo grub-mkconfig -o /boot/grub/grub.cfg
 ========================================
 
@@ -160,9 +185,9 @@ sudo timedatectl set-ntp true
 
 ======== SDDM AUTOLOGIN ========
 sudo nano /etc/sddm.conf
-[Autologin]
-User=jame
-Session=hyprland.desktop
+    [Autologin]
+    User=jame
+    Session=hyprland.desktop
 ================================
 
 
@@ -187,8 +212,9 @@ https://github.com/Alexays/Waybar/wiki/Examples
 
 
 ======== KVANTUM CONFIG ========
-# force Kvantum if you want consistent theming across apps
-env = QT_STYLE_OVERRIDE,Kvantum
+nano ~/.config/hypr/hyprland.conf
+    # force Kvantum if you want consistent theming across apps
+    env = QT_STYLE_OVERRIDE,Kvantum
 ================================
 
 
