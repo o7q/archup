@@ -54,6 +54,7 @@ mpv               - media player
 f3d               - 3d viewer
 nwg-look          - for GTK theming
 kvantum           - for QT theming
+ufw               - firewall
 noto-fonts
 noto-fonts-cjk    - asian characters
 noto-fonts-emoji
@@ -61,17 +62,6 @@ noto-fonts-extra
 ttf-noto-nerd     - nerd font, fixes some missing characters, such as for waybar
 hyprpolkitagent   - polkit authentication agent
 ==========================
-
-
-
-======== DOTFILES YOU PROBABLY WANT TO BACKUP (if you have them) ========
-hypr
-waybar
-rofi
-kitty
-fish
-oh-my-posh
-=========================================================================
 
 
 
@@ -224,6 +214,18 @@ nano ~/.config/hypr/hyprland.conf
 
 ======== GTK DARK THEME ========
 gsettings set org.gnome.desktop.interface color-scheme "prefer-dark"
+================================
+
+
+
+
+======== FIREWALL ========
+sudo ufw <MODE (allow or limit)> <PORT>/tcp
+sudo ufw default deny incoming
+sudo ufw default allow outgoing
+sudo ufw enable
+
+sudo ufw status verbose
 ================================
         </span>
     </div>
